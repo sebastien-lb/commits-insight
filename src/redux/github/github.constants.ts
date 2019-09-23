@@ -1,0 +1,2 @@
+export const FETCH_COMMITS = "github/FETCH_COMMITS";
+export const FETCH_COMMITS_SUCCESS = "github/FETCH_COMMITS_SUCCESS";
