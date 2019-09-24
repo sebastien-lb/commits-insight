@@ -1,11 +1,18 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 import { reducer as githubReducer } from "./github/github.reducer";
 import { githubSaga } from "./github/github.sagas";
 
+const persistGithub = persistReducer(
+  { key: "userState", storage },
+  githubReducer
+);
+
 const rootReducer = combineReducers({
-  githubState: githubReducer
+  githubState: persistGithub
 });
 
 const initialState = {};
@@ -23,5 +30,7 @@ export const store = createStore(
   initialState,
   composeEnhancers(applyMiddleware(sagaMiddleware))
 );
+
+export const persistor = persistStore(store);
 
 sagaMiddleware.run(githubSaga);
