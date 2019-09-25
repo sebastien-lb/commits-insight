@@ -6,8 +6,12 @@ export const assignCommitType = (
   availableTypes: string[] = DEFAULT_TYPES
 ): string | undefined => {
   const typeWithScope = commitName.split("(")[0];
+  const typeWithoutScope = commitName.split(":")[0];
   if (availableTypes.includes(typeWithScope)) {
     return typeWithScope;
+  }
+  if (availableTypes.includes(typeWithoutScope)) {
+    return typeWithoutScope;
   }
   return undefined;
 };
