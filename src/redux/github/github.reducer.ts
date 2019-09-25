@@ -1,6 +1,10 @@
 import { normalize } from "normalizr";
 
-import { FETCH_COMMITS_SUCCESS } from "./github.constants";
+import {
+  FETCH_COMMITS_SUCCESS,
+  SET_ACCESS_TOKEN,
+  SET_REPO_INFO
+} from "./github.constants";
 import { commitListSchema } from "./github.schema";
 
 import { GithubAction, GithubState } from "./github.types";
@@ -18,6 +22,22 @@ export const reducer = (state: GithubState = {}, action: GithubAction) => {
         },
         commitList: normalizedPrData.result
       };
+
+    case SET_ACCESS_TOKEN:
+      return {
+        ...state,
+        accessToken: action.payload.accessToken
+      };
+
+    case SET_REPO_INFO:
+      return {
+        ...state,
+        repositoryInformation: {
+          repositoryName: action.payload.repositoryName,
+          owner: action.payload.owner
+        }
+      };
+
     default:
       return state;
   }

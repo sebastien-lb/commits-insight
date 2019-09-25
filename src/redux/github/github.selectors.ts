@@ -1,7 +1,7 @@
 import { denormalize } from "normalizr";
 
 import { commitListSchema } from "./github.schema";
-import { GitCommit } from "./github.types";
+import { GitCommit, RepositoryInformation } from "./github.types";
 
 import { State } from "../types";
 
@@ -22,4 +22,14 @@ export const getAllCommitMessages = (state: State): string[] => {
     state.githubState.entities
   );
   return commitList.map(commit => commit.commit.message);
+};
+
+export const getAccessToken = (state: State): string | undefined => {
+  return state && state.githubState && state.githubState.accessToken;
+};
+
+export const getRepositoryInformation = (
+  state: State
+): RepositoryInformation | undefined => {
+  return state && state.githubState && state.githubState.repositoryInformation;
 };

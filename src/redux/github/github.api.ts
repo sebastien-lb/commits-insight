@@ -1,10 +1,12 @@
 import axios from "axios";
 
-const PERSONNAL_TOKEN = "";
-
-export const makeFetchCommitsCall = async () => {
+export const makeFetchCommitsCall = async (
+  accessToken: string | undefined,
+  repoName: string | undefined,
+  owner: string | undefined
+) => {
   const rep = await axios.get(
-    `https://api.github.com/repos/sebastien-lb/masterit/commits?access_token=${PERSONNAL_TOKEN}`
+    `https://api.github.com/repos/${owner}/${repoName}/commits?access_token=${accessToken}`
   );
   return rep.data;
 };
