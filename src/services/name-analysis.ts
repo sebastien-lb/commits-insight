@@ -1,4 +1,13 @@
-const DEFAULT_TYPES = ["feat", "refactor", "fix", "chore", "test"];
+const DEFAULT_TYPES = [
+  "feat",
+  "refactor",
+  "fix",
+  "chore",
+  "test",
+  "docs",
+  "perf"
+];
+
 const UNKNOWN_TYPE = "unknown";
 
 export const assignCommitType = (
