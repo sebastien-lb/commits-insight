@@ -81,6 +81,10 @@ const DashboardPage: React.FC<Props> = (props: Props) => {
   const commitAssignationCount = countCommitType(commitTypesAssignation);
 
   const commitTypes = Object.keys(commitAssignationCount);
+  const totalCommits = Object.keys(commitAssignationCount).reduce(
+    (acc: number, key) => acc + commitAssignationCount[key],
+    0
+  );
 
   return (
     <div className={classes.container}>
@@ -106,7 +110,7 @@ const DashboardPage: React.FC<Props> = (props: Props) => {
       </Button>
       <div className={classes.chartContainer}>
         <Typography align="center">
-          Last 150 commits - excluding merge commits{" "}
+          Last 150 commits - {totalCommits} excluding merge commits
         </Typography>
         <DoughnutComponent
           chartData={{
