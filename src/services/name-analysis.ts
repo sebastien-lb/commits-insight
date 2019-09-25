@@ -1,4 +1,5 @@
 const DEFAULT_TYPES = ["feat", "refactor", "fix", "chore", "test"];
+const UNKNOWN_TYPE = "unknown";
 
 export const assignCommitType = (
   commitName: string,
@@ -14,20 +15,19 @@ export const assignCommitType = (
 export const countCommitType = (
   commitTypes: Array<string | undefined>
 ): { [k in string]: number } => {
-  return commitTypes.reduce(
-    (count: { [k in string]: number }, commitType) => {
-      if (commitType && commitType in count) {
-        return {
-          ...count,
-          total: count.total + 1,
-          [commitType]: count[commitType] + 1
-        };
-      }
-      if (commitType) {
-        return { ...count, total: count.total + 1, [commitType]: 1 };
-      }
-      return { ...count, total: count.total + 1 };
-    },
-    { total: 0 }
-  );
+  return commitTypes.reduce((count: { [k in string]: number }, commitType) => {
+    if (commitType && commitType in count) {
+      return {
+        ...count,
+        [commitType]: count[commitType] + 1
+      };
+    }
+    if (commitType) {
+      return { ...count, [commitType]: 1 };
+    }
+    return {
+      ...count,
+      [UNKNOWN_TYPE]: UNKNOWN_TYPE in count ? count[UNKNOWN_TYPE] + 1 : 1
+    };
+  }, {});
 };
