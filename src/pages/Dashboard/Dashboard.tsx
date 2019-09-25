@@ -5,8 +5,12 @@ import { CSSProperties } from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-import { assignCommitType, countCommitType } from "../../helpers/name-analysis";
+import {
+  assignCommitType,
+  countCommitType
+} from "../../services/name-analysis";
 import { RepositoryInformation } from "../../redux/github/github.types";
+import { DoughnutComponent } from "../../components";
 
 type ClassNames = "container" | "submitButton";
 interface OwnProps {
@@ -70,11 +74,12 @@ const DashboardPage: React.FC<Props> = (props: Props) => {
     loadCommits();
   };
 
-  const commitTypes = (props.commitMessages || []).map(message =>
+  const commitTypesAssignation = (props.commitMessages || []).map(message =>
     assignCommitType(message)
   );
-  const commitCounts = countCommitType(commitTypes);
-  console.log(commitCounts);
+  const commitAssignationCount = countCommitType(commitTypesAssignation);
+
+  const commitTypes = Object.keys(commitAssignationCount);
 
   return (
     <div className={classes.container}>
@@ -93,7 +98,34 @@ const DashboardPage: React.FC<Props> = (props: Props) => {
       <Button className={classes.submitButton} onClick={onSubmit}>
         Fetch Commits
       </Button>
-      <div></div>
+      <div>
+        <DoughnutComponent
+          chartData={{
+            datasets: [
+              {
+                data: commitTypes.map(key => commitAssignationCount[key]),
+                backgroundColor: [
+                  "#FF6384",
+                  "#36A2EB",
+                  "#FFCE56",
+                  "#8AE399",
+                  "#198C3D",
+                  "#F43996",
+                  "#AD1A58",
+                  "#782325",
+                  "#DCF8E1",
+                  "#716BB9",
+                  "#D38F73",
+                  "#77E589",
+                  "#5C9BF2",
+                  "#14CCD5"
+                ]
+              }
+            ],
+            labels: commitTypes
+          }}
+        />
+      </div>
     </div>
   );
 };
