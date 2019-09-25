@@ -18,7 +18,7 @@ export class DoughnutComponent extends React.Component<Props> {
     const { chartData, classes } = this.props;
     return (
       <div className={classes.container}>
-        <Doughnut width={500} height={500} data={chartData} />
+        <Doughnut width={300} height={300} data={chartData} />
       </div>
     );
   }

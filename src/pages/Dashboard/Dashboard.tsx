@@ -4,6 +4,7 @@ import { Style } from "jss";
 import { CSSProperties } from "@material-ui/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 import {
   assignCommitType,
@@ -12,7 +13,7 @@ import {
 import { RepositoryInformation } from "../../redux/github/github.types";
 import { DoughnutComponent } from "../../components";
 
-type ClassNames = "container" | "submitButton";
+type ClassNames = "container" | "submitButton" | "chartContainer";
 interface OwnProps {
   classes: Record<ClassNames, string>;
 }
@@ -103,7 +104,10 @@ const DashboardPage: React.FC<Props> = (props: Props) => {
       >
         Fetch Commits
       </Button>
-      <div>
+      <div className={classes.chartContainer}>
+        <Typography align="center">
+          Last 150 commits - excluding merge commits{" "}
+        </Typography>
         <DoughnutComponent
           chartData={{
             datasets: [
@@ -142,6 +146,9 @@ const styles: Style = (theme: Theme): Record<ClassNames, CSSProperties> => ({
     alignItems: "center"
   },
   submitButton: {
+    marginTop: theme.spacing(4)
+  },
+  chartContainer: {
     marginTop: theme.spacing(4)
   }
 });
