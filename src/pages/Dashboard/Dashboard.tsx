@@ -95,7 +95,12 @@ const DashboardPage: React.FC<Props> = (props: Props) => {
         onChange={handleChangeRepositoryName}
       />
       <TextField label="Owner" value={owner} onChange={handleChangeOwner} />
-      <Button className={classes.submitButton} onClick={onSubmit}>
+      <Button
+        color="primary"
+        variant="contained"
+        className={classes.submitButton}
+        onClick={onSubmit}
+      >
         Fetch Commits
       </Button>
       <div>
