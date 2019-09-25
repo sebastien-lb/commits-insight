@@ -9,6 +9,13 @@ const DEFAULT_TYPES = [
 ];
 
 const UNKNOWN_TYPE = "unknown";
+const MERGE_TYPE = "merge";
+
+export const isMergeCommit = (commitName: string) => {
+  const GITHUB_MERGE_PREFIX = "Merge";
+  const beginningOfCommit = commitName.split(" ")[0];
+  return beginningOfCommit === GITHUB_MERGE_PREFIX;
+};
 
 export const assignCommitType = (
   commitName: string,
@@ -22,6 +29,9 @@ export const assignCommitType = (
   if (availableTypes.includes(typeWithoutScope)) {
     return typeWithoutScope;
   }
+  if (isMergeCommit(commitName)) {
+    return MERGE_TYPE;
+  }
   return undefined;
 };
 
@@ -29,6 +39,9 @@ export const countCommitType = (
   commitTypes: Array<string | undefined>
 ): { [k in string]: number } => {
   return commitTypes.reduce((count: { [k in string]: number }, commitType) => {
+    if (commitType === MERGE_TYPE) {
+      return { ...count };
+    }
     if (commitType && commitType in count) {
       return {
         ...count,
